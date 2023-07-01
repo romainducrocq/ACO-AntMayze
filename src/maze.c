@@ -5,8 +5,8 @@ static maze* maze_ctor(int w, int h);
 static void maze_dtor(maze*);
 
 // private
-static int maze_getIndex(maze* this, int x, int y);
-static cell* maze_getNextCell(maze* this);
+static int maze_getIndex(maze*, int x, int y);
+static cell* maze_getNextCell(maze*);
 static void maze_removeWalls(cell* a, cell* b);
 static void maze_makeMaze(maze*);
 static void maze_printMaze(maze*);
