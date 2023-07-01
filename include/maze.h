@@ -1,6 +1,9 @@
 #ifndef _MAZE_H
 #define _MAZE_H
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "conf.h"
 
 typedef struct cell {

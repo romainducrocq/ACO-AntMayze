@@ -1,8 +1,5 @@
 #include "maze.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
 // public
 static maze* maze_ctor(int w, int h);
 static void maze_dtor(maze*);
