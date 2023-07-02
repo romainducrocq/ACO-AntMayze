@@ -1,6 +1,6 @@
 #include "maze.h"
 
-static maze* maze_ctor(int w, int h);
+static maze* maze_ctor();
 static void maze_dtor(maze*);
 
 static int maze_getIndex(maze*, int x, int y);
@@ -20,18 +20,18 @@ const maze_vt Maze = {
     ._printMaze = maze_printMaze
 };
 
-static maze* maze_ctor(int w, int h)
+static maze* maze_ctor()
 {
     maze* this = (maze*)malloc(sizeof(maze));
 
     this->vt = (maze_vt*)malloc(sizeof(maze_vt));
     *this->vt = Maze;
 
-    this->cols = w;
-    this->rows = h;
+    this->cols = CONF.WIDTH;
+    this->rows = CONF.HEIGHT;
 
-    this->cells = (cell*)malloc((w * h) * sizeof(cell));
-    this->_stack = (cell**)malloc((w * h) * sizeof(cell*));
+    this->cells = (cell*)malloc((this->cols * this->rows) * sizeof(cell));
+    this->_stack = (cell**)malloc((this->cols * this->rows) * sizeof(cell*));
 
     this->vt->_makeMaze(this);
 
@@ -109,7 +109,6 @@ static void maze_makeMaze(maze* this)
     }
 
     this->_stackSize = 0;
-    // this->_currentCell = &this->cells[0]; // TODO
     this->_currentCell = &this->cells[rand() % (this->cols * this->rows)];
 
     while(TRUE){

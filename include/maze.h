@@ -26,7 +26,7 @@ typedef struct maze {
 } maze;
 
 typedef struct maze_vt {
-    maze* (*ctor)(int w, int h);
+    maze* (*ctor)();
     void (*dtor)(maze*);
 
     int (*_getIndex)(maze*, int x, int y);

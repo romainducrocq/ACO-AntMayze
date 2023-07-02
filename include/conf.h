@@ -11,24 +11,15 @@
 typedef struct conf {
     int WIDTH;
     int HEIGHT;
+
+    int WIN_W;
+    int WIN_H;
 } conf;
 
-static inline conf* CONF()
-{
-    static conf CONF;
-    return &CONF;
-}
-
-static inline void defaultConf()
-{
-    CONF()->WIDTH = 20;
-    CONF()->HEIGHT = 20;
-}
+extern conf CONF;
 
 static inline int argParse(int argc, char** argv)
 {
-    defaultConf();
-
     // https://github.com/gnif/LookingGlass/blob/c0c63fd93bf999b6601a782fec8b56e9133388cc/client/main.c#L1391
 
     const char cmds[] = "h:W:H:";
@@ -54,11 +45,11 @@ static inline int argParse(int argc, char** argv)
                 break;
 
             case 'W':
-                CONF()->WIDTH = atoi(optarg);
+                CONF.WIDTH = atoi(optarg);
                 continue;
 
             case 'H':
-                CONF()->HEIGHT = atoi(optarg);
+                CONF.HEIGHT = atoi(optarg);
                 continue;
         }
         break;
