@@ -11,6 +11,7 @@ typedef struct window {
 
     SDL_Window* window;
     SDL_Renderer* renderer;
+    SDL_Event event;
 
     double start;
     double end;

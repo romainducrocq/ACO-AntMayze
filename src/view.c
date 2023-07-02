@@ -27,6 +27,9 @@ static window* window_ctor()
     this->start = 0;
     this->delay = 1000 / 60.;
 
+    SDL_SetRenderDrawColor(this->renderer, 0, 0, 0, 255);
+    SDL_RenderClear(this->renderer);
+
     return this;
 }
 
@@ -41,9 +44,6 @@ static void window_dtor(window* this)
 
 static void window_render(window* this)
 {
-    SDL_SetRenderDrawColor(this->renderer, 255, 255, 255, 255);
-    SDL_RenderClear(this->renderer);
-//
     SDL_RenderPresent(this->renderer);
 
     this->end = SDL_GetTicks();
@@ -51,5 +51,9 @@ static void window_render(window* this)
         SDL_Delay(this->delay + this->start - this->end);
     }
     this->start = this->end;
-}
 
+    SDL_SetRenderDrawColor(this->renderer, 220, 220, 220, 255);
+    SDL_RenderClear(this->renderer);
+
+    SDL_PollEvent(&this->event);
+}
