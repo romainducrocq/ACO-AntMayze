@@ -3,7 +3,7 @@
 #include <time.h>
 
 #include "conf.h"
-#include "view.h"
+#include "util/window.h"
 #include "maze.h"
 
 conf CONF = {
@@ -26,17 +26,11 @@ int main(int argc, char** argv) {
         }
 
         {
-            window* w = Window.ctor();
+            // window* w = Window.ctor();
 
-            double start = SDL_GetTicks();
-            while(TRUE) {
-                w->vt->render(w);
+            // w->vt->run(w);
 
-                if(SDL_GetTicks() - start > 2000) {
-                    break;
-                }
-            }
-            Window.dtor(w);
+            // Window.dtor(w);
         }
 
         return 0;
