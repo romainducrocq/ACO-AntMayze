@@ -35,14 +35,14 @@ int main(int argc, char** argv) {
             event* e = Event.ctor();
             renderer* r = Renderer.ctor();
 
-            window* w = Window.ctor(
+            Window.ctor(
                 a->vt->setup, e->vt->setup, r->vt->setup,
                 a->vt->loop, e->vt->loop, r->vt->loop
             );
 
-            w->vt->run(w, a , e, r);
+            Window.a()->vt->run(a , e, r);
 
-            Window.dtor(w);
+            Window.dtor();
 
             App.dtor(a);
             Event.dtor(e);

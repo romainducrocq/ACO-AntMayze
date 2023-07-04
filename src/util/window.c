@@ -1,16 +1,20 @@
 #include "util/window.h"
 
-static window* window_ctor(
+static window* window_a();
+
+static void window_ctor(
     void (*)(app*), void (*)(event*), void (*)(renderer*),
     int (*)(app*), void (*)(event*), void (*)(renderer*));
-static void window_dtor(window*);
+static void window_dtor();
 
-static void window_setup(window*, app*, event*, renderer*);
-static void window_loop(window*, app*, event*, renderer*);
+static void window_setup(app*, event*, renderer*);
+static void window_loop(app*, event*, renderer*);
 
-static void window_run(window*, app*, event*, renderer*);
+static void window_run(app*, event*, renderer*);
 
 const window_vt Window = {
+        .a = window_a,
+
         .ctor = window_ctor,
         .dtor = window_dtor,
 
@@ -27,81 +31,93 @@ const window_vt Window = {
         ._app_loop = NULL
 };
 
-static window* window_ctor(
+static window* INSTANCE(window* instance)
+{
+    static window* singleton;
+    if(instance != NULL) {
+        singleton = instance;
+    }
+    return singleton;
+}
+
+static window* window_a()
+{
+    return INSTANCE(NULL);
+}
+
+static void window_ctor(
     void (*app_setup)(app*), void (*event_setup)(event*), void (*renderer_setup)(renderer*),
     int (*app_loop)(app*), void (*event_loop)(event*), void (*renderer_loop)(renderer*)
 ) {
-    window* this = (window*)malloc(sizeof(window));
+    INSTANCE((window*)malloc(sizeof(window)));
 
-    this->vt = (window_vt*)malloc(sizeof(window_vt));
-    *this->vt = Window;
+    Window.a()->vt = (window_vt*)malloc(sizeof(window_vt));
+    *Window.a()->vt = Window;
 
-    this->vt->_event_setup = event_setup;
-    this->vt->_renderer_setup = renderer_setup;
-    this->vt->_app_setup = app_setup;
-    this->vt->_event_loop = event_loop;
-    this->vt->_renderer_loop = renderer_loop;
-    this->vt->_app_loop = app_loop;
+    Window.a()->vt->_event_setup = event_setup;
+    Window.a()->vt->_renderer_setup = renderer_setup;
+    Window.a()->vt->_app_setup = app_setup;
+    Window.a()->vt->_event_loop = event_loop;
+    Window.a()->vt->_renderer_loop = renderer_loop;
+    Window.a()->vt->_app_loop = app_loop;
 
     SDL_Init(SDL_INIT_VIDEO);
-    this->window = SDL_CreateWindow("COOL PROJECT VIBE", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+    Window.a()->window = SDL_CreateWindow("COOL PROJECT VIBE", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                     CONF.WIN_W, CONF.WIN_H, SDL_WINDOW_RESIZABLE);
-    this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_SOFTWARE);
+    Window.a()->renderer = SDL_CreateRenderer(Window.a()->window, -1, SDL_RENDERER_SOFTWARE);
 
-    this->_start = 0;
-    this->_delay = 1000 / 60.;
-    this->_bgCol[0] = 220;
-    this->_bgCol[1] = 220;
-    this->_bgCol[2] = 220;
-
-    return this;
+    Window.a()->_start = 0;
+    Window.a()->_delay = 1000 / 60.;
+    Window.a()->_bgCol[0] = 220;
+    Window.a()->_bgCol[1] = 220;
+    Window.a()->_bgCol[2] = 220;
 }
 
-static void window_dtor(window* this)
+static void window_dtor()
 {
-    SDL_DestroyRenderer(this->renderer);
-    SDL_DestroyWindow(this->window);
+    SDL_DestroyRenderer(Window.a()->renderer);
+    SDL_DestroyWindow(Window.a()->window);
 
-    free(this->vt);
-    free(this);
+    free(Window.a()->vt);
+    free(Window.a());
 }
 
-static void window_run(window* this, app* app, event* event, renderer* renderer)
+static void window_run(app* app, event* event, renderer* renderer)
 {
-    this->vt->_setup(this, app, event, renderer);
-    this->vt->_loop(this, app, event, renderer);
+    Window.a()->vt->_setup(app, event, renderer);
+    Window.a()->vt->_loop(app, event, renderer);
 }
 
-static void window_setup(window* this, app* app, event* event, renderer* renderer)
+static void window_setup(app* app, event* event, renderer* renderer)
 {
-    this->vt->_event_setup(event);
-    this->vt->_app_setup(app);
-    this->vt->_renderer_setup(renderer);
+    Window.a()->vt->_event_setup(event);
+    Window.a()->vt->_app_setup(app);
+    Window.a()->vt->_renderer_setup(renderer);
 }
 
-static void window_loop(window* this, app* app, event* event, renderer* renderer)
+static void window_loop(app* app, event* event, renderer* renderer)
 {
     while(TRUE) {
-        SDL_PollEvent(&this->event);
-        if(this->event.type == SDL_QUIT) {
+        SDL_PollEvent(&Window.a()->event);
+        if(Window.a()->event.type == SDL_QUIT) {
             break;
         }
-        this->vt->_event_loop(event);
+        Window.a()->vt->_event_loop(event);
 
-        if(this->vt->_app_loop(app) == FALSE) {
+        if(Window.a()->vt->_app_loop(app) == FALSE) {
             break;
         }
 
-        SDL_SetRenderDrawColor(this->renderer,this->_bgCol[0],
-                               this->_bgCol[1],this->_bgCol[2],255);
-        SDL_RenderClear(this->renderer);
-        this->vt->_renderer_loop(renderer);
-        SDL_RenderPresent(this->renderer);
+        SDL_SetRenderDrawColor(Window.a()->renderer,Window.a()->_bgCol[0],
+                               Window.a()->_bgCol[1],Window.a()->_bgCol[2],255);
+        SDL_RenderClear(Window.a()->renderer);
+        Window.a()->vt->_renderer_loop(renderer);
+        SDL_RenderPresent(Window.a()->renderer);
 
-        this->_end = SDL_GetTicks();
-        if(this->_end - this->_start < this->_delay) {
-            SDL_Delay(this->_delay + this->_start - this->_end);
+        Window.a()->_end = SDL_GetTicks();
+        if(Window.a()->_end - Window.a()->_start < Window.a()->_delay) {
+            SDL_Delay(Window.a()->_delay + Window.a()->_start - Window.a()->_end);
         }
-        this->_start = this->_end;
+        Window.a()->_start = Window.a()->_end;
     }
 }

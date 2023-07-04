@@ -24,16 +24,18 @@ typedef struct renderer renderer;
 typedef struct event event;
 
 typedef struct window_vt {
-    window* (*ctor)(
+    window* (*a)();
+
+    void (*ctor)(
         void (*)(app*), void (*)(event*), void (*)(renderer*),
         int (*)(app*), void (*)(event*), void (*)(renderer*));
 
-    void (*dtor)(window*);
+    void (*dtor)();
 
-    void (*_setup)(window*, app*, event*, renderer*);
-    void (*_loop)(window*, app*, event*, renderer*);
+    void (*_setup)(app*, event*, renderer*);
+    void (*_loop)(app*, event*, renderer*);
 
-    void (*run)(window*, app*, event*, renderer*);
+    void (*run)(app*, event*, renderer*);
 
     void (*_event_setup)(event*);
     void (*_renderer_setup)(renderer*);
