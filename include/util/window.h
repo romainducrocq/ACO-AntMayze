@@ -1,5 +1,5 @@
-#ifndef _VIEW_H
-#define _VIEW_H
+#ifndef _UTIL_WINDOW_H
+#define _UTIL_WINDOW_H
 
 #include <SDL.h>
 #include <SDL_image/SDL_image.h>
@@ -25,15 +25,15 @@ typedef struct event event;
 
 typedef struct window_vt {
     window* (*ctor)(
-        void (*)(event*), void (*)(renderer*), void (*)(app*),
-        void (*)(event*), void (*)(renderer*), int (*)(app*));
+        void (*)(app*), void (*)(event*), void (*)(renderer*),
+        int (*)(app*), void (*)(event*), void (*)(renderer*));
 
     void (*dtor)(window*);
 
-    void (*_setup)(window*, app*, renderer*, event*);
-    void (*_loop)(window*, app*, renderer*, event*);
+    void (*_setup)(window*, app*, event*, renderer*);
+    void (*_loop)(window*, app*, event*, renderer*);
 
-    void (*run)(window*, app*, renderer*, event*);
+    void (*run)(window*, app*, event*, renderer*);
 
     void (*_event_setup)(event*);
     void (*_renderer_setup)(renderer*);

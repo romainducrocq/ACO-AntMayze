@@ -1,14 +1,14 @@
 #include "util/window.h"
 
 static window* window_ctor(
-    void (*)(event*), void (*)(renderer*), void (*)(app*),
-    void (*)(event*), void (*)(renderer*), int (*)(app*));
+    void (*)(app*), void (*)(event*), void (*)(renderer*),
+    int (*)(app*), void (*)(event*), void (*)(renderer*));
 static void window_dtor(window*);
 
-static void window_setup(window*, app*, renderer*, event*);
-static void window_loop(window*, app*, renderer*, event*);
+static void window_setup(window*, app*, event*, renderer*);
+static void window_loop(window*, app*, event*, renderer*);
 
-static void window_run(window*, app*, renderer*, event*);
+static void window_run(window*, app*, event*, renderer*);
 
 const window_vt Window = {
         .ctor = window_ctor,
@@ -28,8 +28,8 @@ const window_vt Window = {
 };
 
 static window* window_ctor(
-    void (*event_setup)(event*), void (*renderer_setup)(renderer*), void (*app_setup)(app*),
-    void (*event_loop)(event*), void (*renderer_loop)(renderer*), int (*app_loop)(app*)
+    void (*app_setup)(app*), void (*event_setup)(event*), void (*renderer_setup)(renderer*),
+    int (*app_loop)(app*), void (*event_loop)(event*), void (*renderer_loop)(renderer*)
 ) {
     window* this = (window*)malloc(sizeof(window));
 
@@ -66,20 +66,20 @@ static void window_dtor(window* this)
     free(this);
 }
 
-static void window_run(window* this, app* app, renderer* renderer, event* event)
+static void window_run(window* this, app* app, event* event, renderer* renderer)
 {
-    this->vt->_setup(this, app, renderer, event);
-    this->vt->_loop(this, app, renderer, event);
+    this->vt->_setup(this, app, event, renderer);
+    this->vt->_loop(this, app, event, renderer);
 }
 
-static void window_setup(window* this, app* app, renderer* renderer, event* event)
+static void window_setup(window* this, app* app, event* event, renderer* renderer)
 {
     this->vt->_event_setup(event);
     this->vt->_app_setup(app);
     this->vt->_renderer_setup(renderer);
 }
 
-static void window_loop(window* this, app* app, renderer* renderer, event* event)
+static void window_loop(window* this, app* app, event* event, renderer* renderer)
 {
     while(TRUE) {
         SDL_PollEvent(&this->event);

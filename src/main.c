@@ -3,7 +3,12 @@
 #include <time.h>
 
 #include "conf.h"
+
+#include "app.h"
+#include "view/event.h"
+#include "view/renderer.h"
 #include "util/window.h"
+
 #include "maze.h"
 
 conf CONF = {
@@ -26,11 +31,22 @@ int main(int argc, char** argv) {
         }
 
         {
-            // window* w = Window.ctor();
+            app* a = App.ctor();
+            event* e = Event.ctor();
+            renderer* r = Renderer.ctor();
 
-            // w->vt->run(w);
+            window* w = Window.ctor(
+                a->vt->setup, e->vt->setup, r->vt->setup,
+                a->vt->loop, e->vt->loop, r->vt->loop
+            );
 
-            // Window.dtor(w);
+            w->vt->run(w, a , e, r);
+
+            Window.dtor(w);
+
+            App.dtor(a);
+            Event.dtor(e);
+            Renderer.dtor(r);
         }
 
         return 0;
