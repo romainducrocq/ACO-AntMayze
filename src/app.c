@@ -39,8 +39,8 @@ static void app_ctor()
     App.a()->vt = (app_vt*)malloc(sizeof(app_vt));
     *App.a()->vt = App;
 
-    Event.ctor();
-    Renderer.ctor();
+    Event.ctor(NULL);
+    Renderer.ctor(NULL);
 
     Window.ctor(
         App.a()->vt->setup, Event.a()->vt->setup, Renderer.a()->vt->setup,
@@ -48,6 +48,9 @@ static void app_ctor()
     );
 
     App.a()->super = Window.a();
+
+    Event.a()->event = &App.a()->super->event;
+    Renderer.a()->renderer = App.a()->super->renderer;
 
     App.a()->super->vt->run(App.a() , Event.a(), Renderer.a());
 }

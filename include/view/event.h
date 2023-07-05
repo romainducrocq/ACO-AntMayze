@@ -8,12 +8,13 @@
 typedef struct event {
     struct event_vt* vt;
 
+    SDL_Event* event;
 } event;
 
 typedef struct event_vt {
     event* (*a)();
 
-    void (*ctor)();
+    void (*ctor)(SDL_Event*);
     void (*dtor)();
 
     void (*setup)();

@@ -9,12 +9,13 @@
 typedef struct renderer {
     struct renderer_vt* vt;
 
+    SDL_Renderer* renderer;
 } renderer;
 
 typedef struct renderer_vt {
     renderer* (*a)();
 
-    void (*ctor)();
+    void (*ctor)(SDL_Renderer*);
     void (*dtor)();
 
     void (*setup)();

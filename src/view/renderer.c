@@ -2,7 +2,7 @@
 
 static renderer* renderer_a();
 
-static void renderer_ctor();
+static void renderer_ctor(SDL_Renderer*);
 static void renderer_dtor();
 
 static void renderer_setup();
@@ -32,12 +32,14 @@ const renderer_vt Renderer = {
     .loop = renderer_loop
 };
 
-static void renderer_ctor()
+static void renderer_ctor(SDL_Renderer* _renderer)
 {
     INSTANCE((renderer*)malloc(sizeof(renderer)));
 
     Renderer.a()->vt = (renderer_vt*)malloc(sizeof(renderer_vt));
     *Renderer.a()->vt = Renderer;
+
+    Renderer.a()->renderer = _renderer;
 }
 
 static void renderer_dtor()
