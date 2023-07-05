@@ -5,9 +5,6 @@
 #include "conf.h"
 
 #include "app.h"
-#include "view/event.h"
-#include "view/renderer.h"
-#include "util/window.h"
 
 #include "maze.h"
 
@@ -33,21 +30,8 @@ int main(int argc, char** argv) {
 
         {
             App.ctor();
-            Event.ctor();
-            Renderer.ctor();
-
-            Window.ctor(
-                App.a()->vt->setup, Event.a()->vt->setup, Renderer.a()->vt->setup,
-                App.a()->vt->loop, Event.a()->vt->loop, Renderer.a()->vt->loop
-            );
-
-            Window.a()->vt->run(App.a() , Event.a(), Renderer.a());
-
-            Window.dtor();
 
             App.dtor();
-            Event.dtor();
-            Renderer.dtor();
         }
 
         return 0;

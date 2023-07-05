@@ -3,7 +3,12 @@
 
 #include "conf.h"
 
+#include "util/window.h"
+#include "view/event.h"
+#include "view/renderer.h"
+
 typedef struct app {
+    window* super;
     struct app_vt* vt;
 
 } app;

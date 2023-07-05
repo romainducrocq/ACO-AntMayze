@@ -38,10 +38,27 @@ static void app_ctor()
 
     App.a()->vt = (app_vt*)malloc(sizeof(app_vt));
     *App.a()->vt = App;
+
+    Event.ctor();
+    Renderer.ctor();
+
+    Window.ctor(
+        App.a()->vt->setup, Event.a()->vt->setup, Renderer.a()->vt->setup,
+        App.a()->vt->loop, Event.a()->vt->loop, Renderer.a()->vt->loop
+    );
+
+    App.a()->super = Window.a();
+
+    App.a()->super->vt->run(App.a() , Event.a(), Renderer.a());
 }
 
 static void app_dtor()
 {
+    Window.dtor();
+
+    Event.dtor();
+    Renderer.dtor();
+
     free(App.a()->vt);
     free(App.a());
 }
