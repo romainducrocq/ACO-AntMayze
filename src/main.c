@@ -30,23 +30,24 @@ int main(int argc, char** argv) {
             Maze.dtor(m);
         }
 
+
         {
-            app* a = App.ctor();
-            event* e = Event.ctor();
-            renderer* r = Renderer.ctor();
+            App.ctor();
+            Event.ctor();
+            Renderer.ctor();
 
             Window.ctor(
-                a->vt->setup, e->vt->setup, r->vt->setup,
-                a->vt->loop, e->vt->loop, r->vt->loop
+                App.a()->vt->setup, Event.a()->vt->setup, Renderer.a()->vt->setup,
+                App.a()->vt->loop, Event.a()->vt->loop, Renderer.a()->vt->loop
             );
 
-            Window.a()->vt->run(a , e, r);
+            Window.a()->vt->run(App.a() , Event.a(), Renderer.a());
 
             Window.dtor();
 
-            App.dtor(a);
-            Event.dtor(e);
-            Renderer.dtor(r);
+            App.dtor();
+            Event.dtor();
+            Renderer.dtor();
         }
 
         return 0;

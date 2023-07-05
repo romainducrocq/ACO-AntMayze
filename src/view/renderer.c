@@ -1,12 +1,30 @@
 #include "view/renderer.h"
 
-static renderer* renderer_ctor();
-static void renderer_dtor(renderer*);
+static renderer* renderer_a();
 
-static void renderer_setup(renderer*);
-static void renderer_loop(renderer*);
+static void renderer_ctor();
+static void renderer_dtor();
+
+static void renderer_setup();
+static void renderer_loop();
+
+static renderer* INSTANCE(renderer* instance)
+{
+    static renderer* singleton;
+    if(instance != NULL) {
+        singleton = instance;
+    }
+    return singleton;
+}
+
+static renderer* renderer_a()
+{
+    return INSTANCE(NULL);
+}
 
 const renderer_vt Renderer = {
+    .a = renderer_a,
+
     .ctor = renderer_ctor,
     .dtor = renderer_dtor,
 
@@ -14,29 +32,27 @@ const renderer_vt Renderer = {
     .loop = renderer_loop
 };
 
-static renderer* renderer_ctor()
+static void renderer_ctor()
 {
-    renderer* this = (renderer*)malloc(sizeof(renderer));
+    INSTANCE((renderer*)malloc(sizeof(renderer)));
 
-    this->vt = (renderer_vt*)malloc(sizeof(renderer_vt));
-    *this->vt = Renderer;
-
-    return this;
+    Renderer.a()->vt = (renderer_vt*)malloc(sizeof(renderer_vt));
+    *Renderer.a()->vt = Renderer;
 }
 
-static void renderer_dtor(renderer* this)
+static void renderer_dtor()
 {
-    free(this->vt);
-    free(this);
+    free(Renderer.a()->vt);
+    free(Renderer.a());
 }
 
-static void renderer_setup(renderer* this)
+static void renderer_setup()
 {
-    if(this == NULL) { return; }
+    if(Renderer.a() == NULL) { return; }
 
 }
 
-static void renderer_loop(renderer* this)
+static void renderer_loop()
 {
-    if(this == NULL) { return; }
+    if(Renderer.a() == NULL) { return; }
 }

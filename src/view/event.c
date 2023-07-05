@@ -1,12 +1,16 @@
 #include "view/event.h"
 
-static event* event_ctor();
-static void event_dtor(event*);
+static event* event_a();
 
-static void event_setup(event*);
-static void event_loop(event*);
+static void event_ctor();
+static void event_dtor();
+
+static void event_setup();
+static void event_loop();
 
 const event_vt Event = {
+    .a = event_a,
+
     .ctor = event_ctor,
     .dtor = event_dtor,
 
@@ -14,29 +18,41 @@ const event_vt Event = {
     .loop = event_loop
 };
 
-static event* event_ctor()
+static event* INSTANCE(event* instance)
 {
-    event* this = (event*)malloc(sizeof(event));
-
-    this->vt = (event_vt*)malloc(sizeof(event_vt));
-    *this->vt = Event;
-
-    return this;
+    static event* singleton;
+    if(instance != NULL) {
+        singleton = instance;
+    }
+    return singleton;
 }
 
-static void event_dtor(event* this)
+static event* event_a()
 {
-    free(this->vt);
-    free(this);
+    return INSTANCE(NULL);
 }
 
-static void event_setup(event* this)
+static void event_ctor()
 {
-    if(this == NULL) { return; }
+    INSTANCE((event*)malloc(sizeof(event)));
+
+    Event.a()->vt = (event_vt*)malloc(sizeof(event_vt));
+    *Event.a()->vt = Event;
+}
+
+static void event_dtor()
+{
+    free(Event.a()->vt);
+    free(Event.a());
+}
+
+static void event_setup()
+{
+    if(Event.a() == NULL) { return; }
 
 }
 
-static void event_loop(event* this)
+static void event_loop()
 {
-    if(this == NULL) { return; }
+    if(Event.a() == NULL) { return; }
 }

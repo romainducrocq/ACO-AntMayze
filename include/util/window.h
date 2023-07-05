@@ -2,7 +2,6 @@
 #define _UTIL_WINDOW_H
 
 #include <SDL.h>
-#include <SDL_image/SDL_image.h>
 
 #include "conf.h"
 

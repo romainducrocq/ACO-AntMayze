@@ -1,6 +1,9 @@
 #ifndef _VIEW_RENDERER_H
 #define _VIEW_RENDERER_H
 
+#include <SDL.h>
+#include <SDL_image/SDL_image.h>
+
 #include "conf.h"
 
 typedef struct renderer {
@@ -9,11 +12,13 @@ typedef struct renderer {
 } renderer;
 
 typedef struct renderer_vt {
-    renderer* (*ctor)();
-    void (*dtor)(renderer*);
+    renderer* (*a)();
 
-    void (*setup)(renderer*);
-    void (*loop)(renderer*);
+    void (*ctor)();
+    void (*dtor)();
+
+    void (*setup)();
+    void (*loop)();
 
 } renderer_vt;
 

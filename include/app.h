@@ -9,11 +9,13 @@ typedef struct app {
 } app;
 
 typedef struct app_vt {
-    app* (*ctor)();
-    void (*dtor)(app*);
+    app* (*a)();
 
-    void (*setup)(app*);
-    int (*loop)(app*);
+    void (*ctor)();
+    void (*dtor)();
+
+    void (*setup)();
+    int (*loop)();
 
 } app_vt;
 

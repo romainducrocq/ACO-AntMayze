@@ -1,6 +1,8 @@
 #ifndef _VIEW_EVENT_H
 #define _VIEW_EVENT_H
 
+#include <SDL.h>
+
 #include "conf.h"
 
 typedef struct event {
@@ -9,11 +11,13 @@ typedef struct event {
 } event;
 
 typedef struct event_vt {
-    event* (*ctor)();
-    void (*dtor)(event*);
+    event* (*a)();
 
-    void (*setup)(event*);
-    void (*loop)(event*);
+    void (*ctor)();
+    void (*dtor)();
+
+    void (*setup)();
+    void (*loop)();
 
 } event_vt;
 

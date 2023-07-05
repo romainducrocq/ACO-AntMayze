@@ -1,12 +1,16 @@
 #include "app.h"
 
-static app* app_ctor();
-static void app_dtor(app*);
+static app* app_a();
 
-static void app_setup(app*);
-static int app_loop(app*);
+static void app_ctor();
+static void app_dtor();
+
+static void app_setup();
+static int app_loop();
 
 const app_vt App = {
+    .a = app_a,
+
     .ctor = app_ctor,
     .dtor = app_dtor,
 
@@ -14,30 +18,42 @@ const app_vt App = {
     .loop = app_loop
 };
 
-static app* app_ctor()
+static app* INSTANCE(app* instance)
 {
-    app* this = (app*)malloc(sizeof(app));
-
-    this->vt = (app_vt*)malloc(sizeof(app_vt));
-    *this->vt = App;
-
-    return this;
+    static app* singleton;
+    if(instance != NULL) {
+        singleton = instance;
+    }
+    return singleton;
 }
 
-static void app_dtor(app* this)
+static app* app_a()
 {
-    free(this->vt);
-    free(this);
+    return INSTANCE(NULL);
 }
 
-static void app_setup(app* this)
+static void app_ctor()
 {
-    if(this == NULL) { return; }
+    INSTANCE((app*)malloc(sizeof(app)));
+
+    App.a()->vt = (app_vt*)malloc(sizeof(app_vt));
+    *App.a()->vt = App;
+}
+
+static void app_dtor()
+{
+    free(App.a()->vt);
+    free(App.a());
+}
+
+static void app_setup()
+{
+    if(App.a() == NULL) { return; }
 
 }
 
-static int app_loop(app* this)
+static int app_loop()
 {
-    if(this == NULL) { return FALSE; }
+    if(App.a() == NULL) { return FALSE; }
     return TRUE;
 }
