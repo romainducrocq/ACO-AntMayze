@@ -10,6 +10,7 @@ typedef struct renderer {
     struct renderer_vt* vt;
 
     SDL_Renderer* renderer;
+    SDL_Rect rect;
 } renderer;
 
 typedef struct renderer_vt {
