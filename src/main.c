@@ -6,7 +6,7 @@
 
 #include "app.h"
 
-#include "maze_generator.h"
+#include "maze.h"
 
 conf CONF = {
     .WIDTH = 20,
@@ -22,14 +22,12 @@ int main(int argc, char** argv) {
     if(argParse(argc, argv))
     {
         {
-            mazeGenerator * m = MazeGenerator.ctor();
-            m->vt->_printMaze(m);
-            MazeGenerator.dtor(m);
+            maze * m = Maze.ctor();
+            Maze.dtor(m);
         }
 
         {
             App.ctor();
-
             App.dtor();
         }
 
