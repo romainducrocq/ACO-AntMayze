@@ -1,31 +1,31 @@
-#include "maze.h"
+#include "maze_generator.h"
 
-static maze* maze_ctor();
-static void maze_dtor(maze*);
+static mazeGenerator* mazeGenerator_ctor();
+static void mazeGenerator_dtor(mazeGenerator*);
 
-static int maze_getIndex(maze*, int x, int y);
-static cell* maze_getNextCell(maze*);
-static void maze_removeWalls(cell* a, cell* b);
-static void maze_makeMaze(maze*);
-static void maze_printMaze(maze*);
+static int mazeGenerator_getIndex(mazeGenerator*, int x, int y);
+static cell* mazeGenerator_getNextCell(mazeGenerator*);
+static void mazeGenerator_removeWalls(cell* a, cell* b);
+static void mazeGenerator_makeMaze(mazeGenerator*);
+static void mazeGenerator_printMaze(mazeGenerator*);
 
-const maze_vt Maze = {
-    .ctor = maze_ctor,
-    .dtor = maze_dtor,
+const mazeGenerator_vt MazeGenerator = {
+    .ctor = mazeGenerator_ctor,
+    .dtor = mazeGenerator_dtor,
 
-    ._getIndex = maze_getIndex,
-    ._getNextCell = maze_getNextCell,
-    ._removeWalls = maze_removeWalls,
-    ._makeMaze = maze_makeMaze,
-    ._printMaze = maze_printMaze
+    ._getIndex = mazeGenerator_getIndex,
+    ._getNextCell = mazeGenerator_getNextCell,
+    ._removeWalls = mazeGenerator_removeWalls,
+    ._makeMaze = mazeGenerator_makeMaze,
+    ._printMaze = mazeGenerator_printMaze
 };
 
-static maze* maze_ctor()
+static mazeGenerator* mazeGenerator_ctor()
 {
-    maze* this = (maze*)malloc(sizeof(maze));
+    mazeGenerator* this = (mazeGenerator*)malloc(sizeof(mazeGenerator));
 
-    this->vt = (maze_vt*)malloc(sizeof(maze_vt));
-    *this->vt = Maze;
+    this->vt = (mazeGenerator_vt*)malloc(sizeof(mazeGenerator_vt));
+    *this->vt = MazeGenerator;
 
     this->cols = CONF.WIDTH;
     this->rows = CONF.HEIGHT;
@@ -38,7 +38,7 @@ static maze* maze_ctor()
     return this;
 }
 
-static void maze_dtor(maze* this)
+static void mazeGenerator_dtor(mazeGenerator* this)
 {
     free(this->cells);
     free(this->_stack);
@@ -46,12 +46,12 @@ static void maze_dtor(maze* this)
     free(this);
 }
 
-static int maze_getIndex(maze* this, int x, int y)
+static int mazeGenerator_getIndex(mazeGenerator* this, int x, int y)
 {
     return x + y * this->cols;
 }
 
-static cell* maze_getNextCell(maze* this)
+static cell* mazeGenerator_getNextCell(mazeGenerator* this)
 {
     int n = 0;
     cell* neighborCells[4] = {
@@ -81,7 +81,7 @@ static cell* maze_getNextCell(maze* this)
     return NULL;
 }
 
-static void maze_removeWalls(cell* a, cell* b)
+static void mazeGenerator_removeWalls(cell* a, cell* b)
 {
     if(abs(a->x - b->x) == 1){
         a->walls[2 + a->x - b->x] = FALSE;
@@ -92,7 +92,7 @@ static void maze_removeWalls(cell* a, cell* b)
     }
 }
 
-static void maze_makeMaze(maze* this)
+static void mazeGenerator_makeMaze(mazeGenerator* this)
 {
     int x, y;
     for(y = 0; y < this->rows; y++){
@@ -127,7 +127,7 @@ static void maze_makeMaze(maze* this)
     }
 }
 
-static void maze_printMaze(maze* this)
+static void mazeGenerator_printMaze(mazeGenerator* this)
 {
     int x, y;
     for (x = 0; x < this->cols; x++) {
