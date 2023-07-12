@@ -1,6 +1,8 @@
 #ifndef _VIEW_EVENT_H
 #define _VIEW_EVENT_H
 
+#include <stdlib.h>
+
 #include <SDL.h>
 
 #include "conf.h"

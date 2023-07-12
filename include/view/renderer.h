@@ -1,12 +1,15 @@
 #ifndef _VIEW_RENDERER_H
 #define _VIEW_RENDERER_H
 
+#include <stdlib.h>
+
 #include <SDL.h>
 #include <SDL_image/SDL_image.h>
 
 #include "conf.h"
 
 #include "env.h"
+#include "view/mazeSDL.h"
 
 typedef struct renderer {
     struct renderer_vt* vt;
@@ -14,7 +17,8 @@ typedef struct renderer {
     SDL_Renderer* renderer;
     env* env;
 
-    SDL_Rect rect;
+    mazeSDL* mazeSDL;
+    // SDL_Rect rect;
 } renderer;
 
 typedef struct renderer_vt {

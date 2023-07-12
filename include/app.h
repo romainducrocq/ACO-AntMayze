@@ -1,6 +1,8 @@
 #ifndef _APP_H
 #define _APP_H
 
+#include <stdlib.h>
+
 #include "conf.h"
 
 #include "util/window.h"

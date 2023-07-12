@@ -1,6 +1,8 @@
 #ifndef _UTIL_WINDOW_H
 #define _UTIL_WINDOW_H
 
+#include <stdlib.h>
+
 #include <SDL.h>
 
 #include "conf.h"

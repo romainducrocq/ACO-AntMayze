@@ -1,6 +1,8 @@
 #ifndef _ENV_H
 #define _ENV_H
 
+#include <stdlib.h>
+
 #include "conf.h"
 
 #include "maze2d.h" 

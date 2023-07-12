@@ -1,0 +1,32 @@
+#ifndef _VIEW_MAZESDL_H
+#define _VIEW_MAZESDL_H
+
+#include <stdlib.h>
+
+#include <SDL.h>
+
+#include "conf.h"
+
+#include "env.h"
+
+typedef struct mazeSDL {
+    struct mazeSDL_vt* vt;
+
+    env* env;
+    int wallSDLThickness;
+    int wallSDLsLength;
+    SDL_Rect* wallSDLs;
+} mazeSDL;
+
+typedef struct mazeSDL_vt {
+    mazeSDL* (*ctor)(env*);
+    void (*dtor)(mazeSDL*);
+
+    void (*_makeMazeSDL)(mazeSDL*);
+    
+    void (*renderMazeSDL)(mazeSDL*, SDL_Renderer*);
+} mazeSDL_vt;
+
+extern const mazeSDL_vt MazeSDL;
+
+#endif
