@@ -48,6 +48,7 @@ static void app_ctor()
     );
 
     App.a()->super = Window.a();
+    App.a()->env = Env.ctor();
 
     Event.a()->event = &App.a()->super->event;
     Renderer.a()->renderer = App.a()->super->renderer;
@@ -58,7 +59,8 @@ static void app_ctor()
 static void app_dtor()
 {
     Window.dtor();
-
+    Env.dtor(App.a()->env);
+    
     Event.dtor();
     Renderer.dtor();
 
