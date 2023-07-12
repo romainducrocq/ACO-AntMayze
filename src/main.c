@@ -9,11 +9,11 @@
 #include "maze2d.h"
 
 conf CONF = {
-    .WIDTH = 20,
-    .HEIGHT = 20,
+    .MAZE_COLS = 20,
+    .MAZE_ROWS = 20,
 
-    .WIN_W = 1920,
-    .WIN_H = 1080
+    .WINDOW_WIDTH = 1920,
+    .WINDOW_HEIGHT = 1080
 };
 
 int main(int argc, char** argv) {

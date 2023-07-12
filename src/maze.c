@@ -27,8 +27,8 @@ static maze* maze_ctor()
     this->vt = (maze_vt*)malloc(sizeof(maze_vt));
     *this->vt = Maze;
 
-    this->cols = CONF.WIDTH;
-    this->rows = CONF.HEIGHT;
+    this->cols = CONF.MAZE_COLS;
+    this->rows = CONF.MAZE_ROWS;
 
     this->cells = (cell*)malloc((this->cols * this->rows) * sizeof(cell));
     this->_stack = (cell**)malloc((this->cols * this->rows) * sizeof(cell*));

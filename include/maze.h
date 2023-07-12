@@ -1,5 +1,5 @@
-#ifndef _MAZE_GENERATOR_H
-#define _MAZE_GENERATOR_H
+#ifndef _MAZE_H
+#define _MAZE_H
 
 #include <stdio.h>
 #include <stdlib.h>

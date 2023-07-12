@@ -63,7 +63,7 @@ static void window_ctor(
 
     SDL_Init(SDL_INIT_VIDEO);
     Window.a()->window = SDL_CreateWindow("COOL PROJECT VIBE", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                    CONF.WIN_W, CONF.WIN_H, SDL_WINDOW_RESIZABLE);
+                                    CONF.WINDOW_WIDTH, CONF.WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
     Window.a()->renderer = SDL_CreateRenderer(Window.a()->window, -1, SDL_RENDERER_SOFTWARE);
 
     Window.a()->_start = 0;
