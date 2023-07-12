@@ -6,7 +6,7 @@
 
 #include "app.h"
 
-#include "maze.h"
+#include "maze2d.h"
 
 conf CONF = {
     .WIDTH = 20,
@@ -22,8 +22,8 @@ int main(int argc, char** argv) {
     if(argParse(argc, argv))
     {
         {
-            maze * m = Maze.ctor();
-            Maze.dtor(m);
+            maze2d* m = Maze2d.ctor();
+            Maze2d.dtor(m);
         }
 
         {
