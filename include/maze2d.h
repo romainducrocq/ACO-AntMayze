@@ -1,7 +1,6 @@
 #ifndef _MAZE2D_H
 #define _MAZE2D_H
 
-#include <stdio.h>
 #include <stdlib.h>
 
 #include "conf.h"

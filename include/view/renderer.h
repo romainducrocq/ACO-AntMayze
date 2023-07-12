@@ -6,17 +6,21 @@
 
 #include "conf.h"
 
+#include "env.h"
+
 typedef struct renderer {
     struct renderer_vt* vt;
 
     SDL_Renderer* renderer;
+    env* env;
+
     SDL_Rect rect;
 } renderer;
 
 typedef struct renderer_vt {
     renderer* (*a)();
 
-    void (*ctor)(SDL_Renderer*);
+    void (*ctor)(SDL_Renderer*, env*);
     void (*dtor)();
 
     void (*setup)();

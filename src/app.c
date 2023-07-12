@@ -39,8 +39,10 @@ static void app_ctor()
     App.a()->vt = (app_vt*)malloc(sizeof(app_vt));
     *App.a()->vt = App;
 
-    Event.ctor(NULL);
-    Renderer.ctor(NULL);
+    App.a()->env = Env.ctor();
+
+    Event.ctor(NULL, App.a()->env);
+    Renderer.ctor(NULL, App.a()->env);
 
     Window.ctor(
         App.a()->vt->setup, Event.a()->vt->setup, Renderer.a()->vt->setup,
@@ -48,7 +50,6 @@ static void app_ctor()
     );
 
     App.a()->super = Window.a();
-    App.a()->env = Env.ctor();
 
     Event.a()->event = &App.a()->super->event;
     Renderer.a()->renderer = App.a()->super->renderer;
@@ -59,10 +60,11 @@ static void app_ctor()
 static void app_dtor()
 {
     Window.dtor();
-    Env.dtor(App.a()->env);
-    
+
     Event.dtor();
     Renderer.dtor();
+
+    Env.dtor(App.a()->env);
 
     free(App.a()->vt);
     free(App.a());

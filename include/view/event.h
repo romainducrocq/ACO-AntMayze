@@ -5,16 +5,19 @@
 
 #include "conf.h"
 
+#include "env.h"
+
 typedef struct event {
     struct event_vt* vt;
 
     SDL_Event* event;
+    env* env;
 } event;
 
 typedef struct event_vt {
     event* (*a)();
 
-    void (*ctor)(SDL_Event*);
+    void (*ctor)(SDL_Event*, env*);
     void (*dtor)();
 
     void (*setup)();

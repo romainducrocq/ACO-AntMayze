@@ -2,7 +2,7 @@
 
 static event* event_a();
 
-static void event_ctor(SDL_Event*);
+static void event_ctor(SDL_Event*, env*);
 static void event_dtor();
 
 static void event_setup();
@@ -32,7 +32,7 @@ static event* event_a()
     return INSTANCE(NULL);
 }
 
-static void event_ctor(SDL_Event* _event)
+static void event_ctor(SDL_Event* _event, env* _env)
 {
     INSTANCE((event*)malloc(sizeof(event)));
 
@@ -40,6 +40,7 @@ static void event_ctor(SDL_Event* _event)
     *Event.a()->vt = Event;
 
     Event.a()->event = _event;
+    Event.a()->env = _env;
 }
 
 static void event_dtor()
