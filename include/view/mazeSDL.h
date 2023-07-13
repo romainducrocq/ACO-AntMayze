@@ -13,6 +13,7 @@ typedef struct mazeSDL {
     struct mazeSDL_vt* vt;
 
     env* env;
+    SDL_Rect bgSDL;
     int wallSDLsLength;
     SDL_Rect* wallSDLs;
 } mazeSDL;

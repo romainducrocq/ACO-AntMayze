@@ -61,6 +61,5 @@ static void renderer_setup()
 
 static void renderer_loop()
 {
-    SDL_SetRenderDrawColor(Renderer.a()->renderer, 0, 0, 255, 255 );
     Renderer.a()->mazeSDL->vt->renderMazeSDL(Renderer.a()->mazeSDL, Renderer.a()->renderer);
 }

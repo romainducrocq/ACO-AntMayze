@@ -68,9 +68,9 @@ static void window_ctor(
 
     Window.a()->_start = 0;
     Window.a()->_delay = 1000 / 60.;
-    Window.a()->_bgCol[0] = 220;
-    Window.a()->_bgCol[1] = 220;
-    Window.a()->_bgCol[2] = 220;
+    Window.a()->_bgCol[0] = 51;
+    Window.a()->_bgCol[1] = 51;
+    Window.a()->_bgCol[2] = 51;
 }
 
 static void window_dtor()
