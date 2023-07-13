@@ -18,7 +18,6 @@ typedef struct renderer {
     env* env;
 
     mazeSDL* mazeSDL;
-    // SDL_Rect rect;
 } renderer;
 
 typedef struct renderer_vt {

@@ -11,8 +11,8 @@ conf CONF = {
     .MAZE_COLS = 20,
     .MAZE_ROWS = 20,
 
-    .WINDOW_WIDTH = 1920,
-    .WINDOW_HEIGHT = 1080
+    .WINDOW_WIDTH = 1280,
+    .WINDOW_HEIGHT = 720
 };
 
 int main(int argc, char** argv) {

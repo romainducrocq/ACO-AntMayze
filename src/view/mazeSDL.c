@@ -1,7 +1,5 @@
 #include "view/mazeSDL.h"
 
-// #include <stdio.h>
-
 static mazeSDL* mazeSDL_ctor(env*);
 static void mazeSDL_dtor(mazeSDL*);
 
@@ -27,7 +25,7 @@ static mazeSDL* mazeSDL_ctor(env* _env)
 
     this->env = _env;
     
-    this->wallSDLThickness = 4;
+    this->wallSDLThickness = 2;
     this->wallSDLsLength = (this->env->maze2d->super->cols-1) * 
                             (this->env->maze2d->super->rows-1);
 
@@ -59,7 +57,7 @@ static void mazeSDL_makeMazeSDL(mazeSDL* this)
                 this->wallSDLs[n].y = this->env->maze2d->cell2ds[i].wall2ds[1][1];
                 this->wallSDLs[n].w = this->wallSDLThickness;
                 this->wallSDLs[n++].h = this->env->maze2d->cell2dHeight;
-                // printf("1");
+                if(y == this->env->maze2d->super->rows - 1) { this->wallSDLs[n-1].h *= 2; }
             }
             if(this->env->maze2d->cell2ds[i].cell->walls[2] == TRUE &&
                y < this->env->maze2d->super->rows - 1) {
@@ -67,27 +65,10 @@ static void mazeSDL_makeMazeSDL(mazeSDL* this)
                 this->wallSDLs[n].y = this->env->maze2d->cell2ds[i].wall2ds[2][1] - (this->wallSDLThickness / 2);
                 this->wallSDLs[n].w = this->env->maze2d->cell2dWidth;
                 this->wallSDLs[n++].h = this->wallSDLThickness;
-                // printf("2");
+                if(x == this->env->maze2d->super->cols - 1) { this->wallSDLs[n-1].w *= 2; }
             }
         }
     }
-    // printf("\n");
-    // for(y = 0; y < this->env->maze2d->super->rows; y++){
-    //     for(x = 0; x < this->env->maze2d->super->cols; x++){
-    //         int i = this->env->maze2d->super->vt->_getIndex(this->env->maze2d->super, x, y);
-    //        printf("%i%i%i%i ", 
-    //        this->env->maze2d->cell2ds[i].cell->walls[0],
-    //        this->env->maze2d->cell2ds[i].cell->walls[1],
-    //        this->env->maze2d->cell2ds[i].cell->walls[2],
-    //        this->env->maze2d->cell2ds[i].cell->walls[3]);
-    //     }
-    //     printf("\n");
-    // }
-    // printf("%i\n", n);
-    // printf("%i\n", this->wallSDLLength);
-    // printf("%i\n", this->env->maze2d->super->rows);
-    // printf("%i\n", this->env->maze2d->super->cols);
-    // printf("\n");
 }
 
 static void mazeSDL_renderMazeSDL(mazeSDL* this, SDL_Renderer* renderer)

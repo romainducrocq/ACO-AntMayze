@@ -54,15 +54,10 @@ static void renderer_dtor()
 
 static void renderer_setup()
 {
-    // Renderer.a()->rect.x = 50;
-    // Renderer.a()->rect.y = 50;
-    // Renderer.a()->rect.w = 50;
-    // Renderer.a()->rect.h = 50;
 }
 
 static void renderer_loop()
 {
     SDL_SetRenderDrawColor(Renderer.a()->renderer, 0, 0, 255, 255 );
-    // SDL_RenderFillRect(Renderer.a()->renderer, &Renderer.a()->rect);
     Renderer.a()->mazeSDL->vt->renderMazeSDL(Renderer.a()->mazeSDL, Renderer.a()->renderer);
 }
