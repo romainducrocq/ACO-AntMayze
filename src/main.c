@@ -5,7 +5,6 @@
 
 #include "app.h"
 
-// #include "maze2d.h"
 
 conf CONF = {
     .MAZE_COLS = 20,
@@ -20,13 +19,6 @@ int main(int argc, char** argv) {
 
     if(argParse(argc, argv))
     {
-        /*
-        {
-            maze2d* m = Maze2d.ctor();
-            Maze2d.dtor(m);
-        }
-        return 0;
-        */
 
         {
             App.ctor();

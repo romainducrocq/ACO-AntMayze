@@ -22,7 +22,7 @@ static inline int argParse(int argc, char** argv)
 {
     // https://github.com/gnif/LookingGlass/blob/c0c63fd93bf999b6601a782fec8b56e9133388cc/client/main.c#L1391
 
-    const char cmds[] = "h:c:r:";
+    const char cmds[] = "h:W:H:C:R:";
 
     for(;;){
         switch(getopt(argc, argv, cmds)){
@@ -30,25 +30,35 @@ static inline int argParse(int argc, char** argv)
             case '?': // help
             case 'h':
             default :
-                printf("usage: apps/exec [-h] [-c COL] [-r ROW]\n");
+                printf("usage: apps/exec [-h] [-W WID] [-H HEI] [-C COL] [-R ROW]\n");
                 printf("\n");
                 printf("ANT COLONY OPTIMIZATION\n");
                 printf("\n");
                 printf("optional args:\n");
                 printf("  -h      Print help and exit\n");
-                printf("  -c COL  Set cols\n");
-                printf("  -r ROW  Set rows\n");
+                printf("  -W HEI  Set width\n");
+                printf("  -H WID  Set height\n");
+                printf("  -C COL  Set cols\n");
+                printf("  -R ROW  Set rows\n");
 
                 return FALSE;
 
             case -1:
                 break;
 
-            case 'c':
+            case 'W':
+                CONF.WINDOW_WIDTH = atoi(optarg);
+                continue;
+
+            case 'H':
+                CONF.WINDOW_HEIGHT = atoi(optarg);
+                continue;
+
+            case 'C':
                 CONF.MAZE_COLS = atoi(optarg);
                 continue;
 
-            case 'r':
+            case 'R':
                 CONF.MAZE_ROWS = atoi(optarg);
                 continue;
         }
