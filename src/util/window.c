@@ -62,7 +62,7 @@ static void window_ctor(
     Window.a()->vt->_app_loop = app_loop;
 
     SDL_Init(SDL_INIT_VIDEO);
-    Window.a()->window = SDL_CreateWindow("COOL PROJECT VIBE", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+    Window.a()->window = SDL_CreateWindow("THE NICHE META PROJECT", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                     CONF.WINDOW_WIDTH, CONF.WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
     Window.a()->renderer = SDL_CreateRenderer(Window.a()->window, -1, SDL_RENDERER_SOFTWARE);
 
