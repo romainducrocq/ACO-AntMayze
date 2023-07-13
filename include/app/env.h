@@ -1,11 +1,11 @@
-#ifndef _ENV_H
-#define _ENV_H
+#ifndef _APP_ENV_H
+#define _APP_ENV_H
 
 #include <stdlib.h>
 
 #include "conf.h"
 
-#include "maze2d.h" 
+#include "app/maze2d.h"
 
 typedef struct env {
     struct env_vt* vt;

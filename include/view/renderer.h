@@ -8,7 +8,7 @@
 
 #include "conf.h"
 
-#include "env.h"
+#include "app/env.h"
 #include "view/mazeSDL.h"
 
 typedef struct renderer {

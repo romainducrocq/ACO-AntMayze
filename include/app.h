@@ -6,7 +6,7 @@
 #include "conf.h"
 
 #include "util/window.h"
-#include "env.h"
+#include "app/env.h"
 #include "view/event.h"
 #include "view/renderer.h"
 

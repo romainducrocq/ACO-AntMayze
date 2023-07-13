@@ -7,13 +7,12 @@
 
 #include "conf.h"
 
-#include "env.h"
+#include "app/env.h"
 
 typedef struct mazeSDL {
     struct mazeSDL_vt* vt;
 
     env* env;
-    int wallSDLThickness;
     int wallSDLsLength;
     SDL_Rect* wallSDLs;
 } mazeSDL;

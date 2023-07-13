@@ -1,4 +1,4 @@
-#include "maze.h"
+#include "app/maze.h"
 
 static maze* maze_ctor();
 static void maze_dtor(maze*);

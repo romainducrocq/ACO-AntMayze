@@ -1,11 +1,11 @@
-#ifndef _MAZE2D_H
-#define _MAZE2D_H
+#ifndef _APP_MAZE2D_H
+#define _APP_MAZE2D_H
 
 #include <stdlib.h>
 
 #include "conf.h"
 
-#include "maze.h"
+#include "app/maze.h"
 
 typedef struct cell2d{
     cell* cell;

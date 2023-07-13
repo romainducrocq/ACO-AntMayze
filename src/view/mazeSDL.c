@@ -25,8 +25,7 @@ static mazeSDL* mazeSDL_ctor(env* _env)
 
     this->env = _env;
     
-    this->wallSDLThickness = 2;
-    this->wallSDLsLength = (this->env->maze2d->super->cols-1) * 
+    this->wallSDLsLength = (this->env->maze2d->super->cols-1) *
                             (this->env->maze2d->super->rows-1);
 
     this->wallSDLs = (SDL_Rect*)malloc(this->wallSDLsLength * sizeof(SDL_Rect));
@@ -53,18 +52,18 @@ static void mazeSDL_makeMazeSDL(mazeSDL* this)
 
             if(this->env->maze2d->cell2ds[i].cell->walls[1] == TRUE && 
                x < this->env->maze2d->super->cols - 1) {
-                this->wallSDLs[n].x = this->env->maze2d->cell2ds[i].wall2ds[1][0] - (this->wallSDLThickness / 2);
+                this->wallSDLs[n].x = this->env->maze2d->cell2ds[i].wall2ds[1][0] - 1;
                 this->wallSDLs[n].y = this->env->maze2d->cell2ds[i].wall2ds[1][1];
-                this->wallSDLs[n].w = this->wallSDLThickness;
+                this->wallSDLs[n].w = 2;
                 this->wallSDLs[n++].h = this->env->maze2d->cell2dHeight;
                 if(y == this->env->maze2d->super->rows - 1) { this->wallSDLs[n-1].h *= 2; }
             }
             if(this->env->maze2d->cell2ds[i].cell->walls[2] == TRUE &&
                y < this->env->maze2d->super->rows - 1) {
                 this->wallSDLs[n].x = this->env->maze2d->cell2ds[i].wall2ds[2][0];
-                this->wallSDLs[n].y = this->env->maze2d->cell2ds[i].wall2ds[2][1] - (this->wallSDLThickness / 2);
+                this->wallSDLs[n].y = this->env->maze2d->cell2ds[i].wall2ds[2][1] - 1;
                 this->wallSDLs[n].w = this->env->maze2d->cell2dWidth;
-                this->wallSDLs[n++].h = this->wallSDLThickness;
+                this->wallSDLs[n++].h = 2;
                 if(x == this->env->maze2d->super->cols - 1) { this->wallSDLs[n-1].w *= 2; }
             }
         }

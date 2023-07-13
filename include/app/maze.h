@@ -1,5 +1,5 @@
-#ifndef _MAZE_H
-#define _MAZE_H
+#ifndef _APP_MAZE_H
+#define _APP_MAZE_H
 
 #include <stdio.h>
 #include <stdlib.h>
