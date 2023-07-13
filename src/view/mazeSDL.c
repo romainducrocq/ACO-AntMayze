@@ -49,7 +49,7 @@ static void mazeSDL_makeMazeSDL(mazeSDL* this)
     int n = 0;
     for(y = 0; y < this->env->maze2d->super->rows; y++){
         for(x = 0; x < this->env->maze2d->super->cols; x++){
-            int i = this->env->maze2d->super->vt->_getIndex(this->env->maze2d->super, x, y);
+            int i = this->env->maze2d->super->vt->getIndex(this->env->maze2d->super, x, y);
 
             if(this->env->maze2d->cell2ds[i].cell->walls[1] == TRUE && 
                x < this->env->maze2d->super->cols - 1) {

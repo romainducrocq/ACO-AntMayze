@@ -54,6 +54,9 @@ static void renderer_dtor()
 
 static void renderer_setup()
 {
+    if(FALSE) {
+        Renderer.a()->env->maze2d->super->vt->printMaze(Renderer.a()->env->maze2d->super);
+    }
 }
 
 static void renderer_loop()

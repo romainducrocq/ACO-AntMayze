@@ -20,7 +20,6 @@ static maze2d* maze2d_ctor()
     *this->vt = Maze2d;
 
     this->super = Maze.ctor();
-    this->super->vt->_printMaze(this->super);
 
     this->cell2dWidth = CONF.WINDOW_WIDTH / (float)CONF.MAZE_COLS;
     this->cell2dHeight = CONF.WINDOW_HEIGHT / (float)CONF.MAZE_ROWS;
@@ -45,7 +44,7 @@ static void maze2d_makeMaze2d(maze2d* this)
     int x, y;
     for(y = 0; y < this->super->rows; y++){
         for(x = 0; x < this->super->cols; x++){
-            int i = this->super->vt->_getIndex(this->super, x, y);
+            int i = this->super->vt->getIndex(this->super, x, y);
             this->cell2ds[i].cell = &this->super->cells[i];
             
             this->cell2ds[i].wall2ds[0][0] = x * this->cell2dWidth;

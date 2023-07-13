@@ -3,21 +3,23 @@
 static maze* maze_ctor();
 static void maze_dtor(maze*);
 
-static int maze_getIndex(maze*, int x, int y);
 static cell* maze_getNextCell(maze*);
 static void maze_removeWalls(cell* a, cell* b);
 static void maze_makeMaze(maze*);
+
+static int maze_getIndex(maze*, int x, int y);
 static void maze_printMaze(maze*);
 
 const maze_vt Maze = {
     .ctor = maze_ctor,
     .dtor = maze_dtor,
 
-    ._getIndex = maze_getIndex,
     ._getNextCell = maze_getNextCell,
     ._removeWalls = maze_removeWalls,
     ._makeMaze = maze_makeMaze,
-    ._printMaze = maze_printMaze
+
+    .getIndex = maze_getIndex,
+    .printMaze = maze_printMaze,
 };
 
 static maze* maze_ctor()
@@ -46,19 +48,14 @@ static void maze_dtor(maze* this)
     free(this);
 }
 
-static int maze_getIndex(maze* this, int x, int y)
-{
-    return x + y * this->cols;
-}
-
 static cell* maze_getNextCell(maze* this)
 {
     int n = 0;
     cell* neighborCells[4] = {
-       &this->cells[this->vt->_getIndex(this, this->_currentCell->x, this->_currentCell->y-1)],
-       &this->cells[this->vt->_getIndex(this, this->_currentCell->x-1, this->_currentCell->y)],
-       &this->cells[this->vt->_getIndex(this, this->_currentCell->x, this->_currentCell->y+1)],
-       &this->cells[this->vt->_getIndex(this, this->_currentCell->x+1, this->_currentCell->y)],
+       &this->cells[this->vt->getIndex(this, this->_currentCell->x, this->_currentCell->y-1)],
+       &this->cells[this->vt->getIndex(this, this->_currentCell->x-1, this->_currentCell->y)],
+       &this->cells[this->vt->getIndex(this, this->_currentCell->x, this->_currentCell->y+1)],
+       &this->cells[this->vt->getIndex(this, this->_currentCell->x+1, this->_currentCell->y)],
     };
 
     if(this->_currentCell->y > 0 && neighborCells[0]->isVisited == FALSE){
@@ -97,7 +94,7 @@ static void maze_makeMaze(maze* this)
     int x, y;
     for(y = 0; y < this->rows; y++){
         for(x = 0; x < this->cols; x++){
-            int i = this->vt->_getIndex(this, x, y);
+            int i = this->vt->getIndex(this, x, y);
             this->cells[i].x = x;
             this->cells[i].y = y;
             int n;
@@ -127,6 +124,11 @@ static void maze_makeMaze(maze* this)
     }
 }
 
+static int maze_getIndex(maze* this, int x, int y)
+{
+    return x + y * this->cols;
+}
+
 static void maze_printMaze(maze* this)
 {
     int x, y;
@@ -136,12 +138,12 @@ static void maze_printMaze(maze* this)
     printf("\n");
     for (y = 0; y < this->rows; y++) {
         for (x = 0; x < this->cols; x++) {
-            if (this->cells[this->vt->_getIndex(this, x, y)].walls[2] == FALSE &&
-                this->cells[this->vt->_getIndex(this, x, y)].walls[3] == FALSE) {
+            if (this->cells[this->vt->getIndex(this, x, y)].walls[2] == FALSE &&
+                this->cells[this->vt->getIndex(this, x, y)].walls[3] == FALSE) {
                 printf("  ");
-            } else if (this->cells[this->vt->_getIndex(this, x, y)].walls[2] == FALSE) {
+            } else if (this->cells[this->vt->getIndex(this, x, y)].walls[2] == FALSE) {
                 printf("| ");
-            } else if (this->cells[this->vt->_getIndex(this, x, y)].walls[3] == FALSE) {
+            } else if (this->cells[this->vt->getIndex(this, x, y)].walls[3] == FALSE) {
                 printf(" _");
             } else {
                 printf("|_");

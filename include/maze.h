@@ -29,11 +29,12 @@ typedef struct maze_vt {
     maze* (*ctor)();
     void (*dtor)(maze*);
 
-    int (*_getIndex)(maze*, int x, int y);
     cell* (*_getNextCell)(maze*);
     void (*_removeWalls)(cell* a, cell* b);
     void (*_makeMaze)(maze*);
-    void (*_printMaze)(maze*);
+
+    int (*getIndex)(maze*, int x, int y);
+    void (*printMaze)(maze*);
 } maze_vt;
 
 extern const maze_vt Maze;
